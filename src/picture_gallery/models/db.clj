@@ -7,7 +7,7 @@
    (doto (DruidDataSource.)
      (.setUrl "jdbc:mysql://localhost:3306/gallery?useSSL=false")
      (.setUsername "root")
-     (.setPassword "mysqlroot")
+     (.setPassword "")
      (.setFilters "stat")
      (.setMaxActive 20)
      (.setInitialSize 1)
