@@ -9,6 +9,7 @@
                  [mysql/mysql-connector-java "8.0.25"]
                  [com.alibaba/druid "1.2.8"]
                  [lib-noir "0.9.9"]
+                 [com.taoensso/timbre "5.1.2"]
                  ]
   :plugins [[lein-ring "0.12.6"]]
   :ring {:handler picture-gallery.handler/app

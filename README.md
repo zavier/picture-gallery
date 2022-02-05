@@ -1,6 +1,7 @@
 # picture-gallery
 
 《Clojure Web开发实战》
+代码问题挺多的，主页用来熟悉一下Clojure语法
 
 ## Prerequisites
 

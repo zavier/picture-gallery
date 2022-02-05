@@ -20,7 +20,8 @@
      (.setTestOnReturn false)
      (.setPoolPreparedStatements true)
      (.setMaxOpenPreparedStatements 20)
-     (.setAsyncInit true))})
+     (.setAsyncInit true)
+     (.init))})
 
 (defn add-image [user_id name]
    (jdbc/with-db-transaction [t-con db-spec]

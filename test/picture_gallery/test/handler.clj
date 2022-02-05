@@ -12,9 +12,3 @@
   (testing "not-found route"
     (let [response (app (request :get "/invalid"))]
       (is (= (:status response) 404)))))
-
-
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "hello world"))

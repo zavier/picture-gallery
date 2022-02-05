@@ -9,7 +9,9 @@
             [noir.session :as session]
             [noir.validation :as valid]
             [noir.response :as resp]
-            [noir.util.crypt :as crypt])
+            [noir.util.crypt :as crypt]
+            [taoensso.timbre :refer [debug info warn error]]
+            )
   (:import java.io.File))
 
 (defn create-gallery-path []
@@ -18,7 +20,7 @@
     (str (.getAbsolutePath user-path) File/separator)))
 
 (defn format-error [id e]
-  (println (.printStackTrace e))
+  (error e "系统异常")
   (str "系统异常，请稍后重试:" (.getMessage e)))
 
 (defn valid? [id pass pass1]
@@ -56,8 +58,9 @@
 
 (defn handle-login [id pass]
   (let [user (db/get-user id)]
+    (info (get user :pass))
     (if (and user (crypt/compare pass (:pass user)))
-      (println "loging success" id)
+      ;(info (str "loging success" id))
       (session/put! :user id)))
   (resp/redirect "/"))
 
@@ -73,6 +76,7 @@
       (create-gallery-path)
       (resp/redirect "/")
       (catch Exception e
+        (error e "注册异常")
         (valid/rule false [:id (format-error id e)])
         (registration-page)))
     (registration-page id)))

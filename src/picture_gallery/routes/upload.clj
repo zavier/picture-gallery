@@ -6,13 +6,13 @@
             [picture-gallery.views.layout :as layout]
             [noir.io :refer [upload-file resource-path]]
             [noir.session :as session]
-            [noir.response :as resp]
             [noir.util.route :refer [restricted]]
             [clojure.java.io :as io]
             [ring.util.response :refer [file-response]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [picture-gallery.models.db :as db]
             [picture-gallery.util :refer [gallery-path thumb-uri thumb-prefix]]
+            [taoensso.timbre :refer [debug info warn error]]
             )
   (:import [java.awt.image AffineTransformOp BufferedImage]
            java.awt.geom.AffineTransform
@@ -56,7 +56,7 @@
                (submit-button "上传"))))
 
 (defn handle-upload [{:keys [filename] :as file}]
-  (println file)
+  (info file)
   (upload-page
     (if (empty? filename)
       "请选择上传文件"
@@ -67,11 +67,12 @@
         (image {:height "150px"}
                (thumb-uri (session/get :user) filename))
         (catch Exception e
-          (str "上传异常：" (.getMessage e))
+          (error e "上传异常")
+          (str "上传错误：" (.getMessage e))
           )))))
 
 (defn serve-file [user-id file-name]
-  (println (str (gallery-path) File/separator file-name))
+  (info (str (gallery-path) File/separator file-name))
   (file-response (str (gallery-path) File/separator file-name)))
 
 (defroutes upload-routes
